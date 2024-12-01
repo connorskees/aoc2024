@@ -16,6 +16,6 @@ counts = Counter(right)
 out = 0
 
 for num in left:
-    out += num * (counts[num] if num in counts else 0)
+    out += num * counts[num]
 
 print(out)
