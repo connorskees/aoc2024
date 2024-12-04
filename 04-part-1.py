@@ -19,31 +19,30 @@ for idx in range(width):
 
 
 def count_diag(x_range, y_range):
-    global out
     diag = "".join(lines[y][x] for x, y in zip(x_range, y_range))
-    out += diag.count("XMAS") + diag.count("SAMX")
+    return diag.count("XMAS") + diag.count("SAMX")
 
 
 # X..
 # .M.
 for x in range(width):
-    count_diag(range(x, width), range(height))
+    out += count_diag(range(x, width), range(height))
 
 # ..X
 # .M.
 for x in range(width):
-    count_diag(range(x + 1)[::-1], range(height))
+    out += count_diag(range(x + 1)[::-1], range(height))
 
 # ...
 # X..
 # .M.
 for y in range(1, height):
-    count_diag(range(width), range(y, height))
+    out += count_diag(range(width), range(y, height))
 
 # ...
 # ..X
 # .M.
 for y in range(1, height):
-    count_diag(range(width)[::-1], range(y, height))
+    out += count_diag(range(width)[::-1], range(y, height))
 
 print(out)
