@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 with open("input.txt") as f:
     input = f.read()
 
@@ -31,17 +29,19 @@ def is_valid(x, y):
 def has_loop():
     curr_pos = start
 
-    visited = defaultdict(set)
+    visited = set()
 
     dir = UP
 
     while is_valid(*curr_pos):
         x, y = curr_pos
 
-        if dir in visited[(x, y)]:
+        key = (x, y, dir)
+
+        if key in visited:
             return True
 
-        visited[(x, y)].add(dir)
+        visited.add(key)
 
         dx, dy = dir
 
