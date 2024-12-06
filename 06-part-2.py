@@ -61,14 +61,43 @@ def has_loop():
     return False
 
 
-for x in range(width):
-    for y in range(height):
-        prev = grid[y][x]
-        grid[y][x] = "#"
+def candidate_obstacle_coords() -> list[tuple[int, int]]:
+    curr_pos = start
 
-        if has_loop():
-            out += 1
+    visited = set()
 
-        grid[y][x] = prev
+    dir = UP
+
+    while is_valid(*curr_pos):
+        x, y = curr_pos
+
+        visited.add((x, y))
+
+        dx, dy = dir
+
+        x += dx
+        y += dy
+
+        if not is_valid(x, y):
+            break
+
+        new_val = grid[y][x]
+
+        if new_val == "#":
+            dir = rotate[dir]
+        else:
+            curr_pos = (x, y)
+
+    return list(visited)
+
+
+for x, y in candidate_obstacle_coords():
+    prev = grid[y][x]
+    grid[y][x] = "#"
+
+    if has_loop():
+        out += 1
+
+    grid[y][x] = prev
 
 print(out)
