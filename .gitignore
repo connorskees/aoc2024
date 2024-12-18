@@ -3,3 +3,5 @@ input.txt
 profile.*
 __pycache__
 *.pyc
+uv.lock
+*.egg-info

@@ -1,2 +1,9 @@
 [tool.ruff]
 ignore = ["E731"]
+
+[project]
+name = "aoc2024"
+version = "0.0.0"
+dependencies = [
+    "z3-solver",
+]
