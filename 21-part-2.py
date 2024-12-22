@@ -127,15 +127,16 @@ def initial_code(code: str) -> list[str]:
 
 
 @functools.cache
-def dfs(code: str, depth: int, pos: tuple[int, int]) -> int:
+def dfs(code: str, depth: int) -> int:
     if depth == 0:
         return len(code)
 
     out = 0
+    pos = (2, 0)
     for c in code:
         new_pos = arrow_coords[c]
         perms = permute(pos, new_pos, valid_arrow_coords)
-        out += min(dfs(perm + "A", depth - 1, (2, 0)) for perm in perms)
+        out += min(dfs(perm + "A", depth - 1) for perm in perms)
         pos = new_pos
 
     return out
@@ -145,7 +146,7 @@ for code in input.splitlines():
     numeric = int(next(re.finditer(r"\d+", code)).group(0))
 
     init = initial_code(code)
-    length = min(dfs(v, 25, (2, 0)) for v in init)
+    length = min(dfs(v, 25) for v in init)
 
     out += numeric * length
 
