@@ -65,13 +65,11 @@ for y1 in range(height):
         if grid[y1][x1] == "#":
             continue
 
-        candidates = [(x, y, []) for x, y in adjacent(x1, y1)]
+        candidates = [(x, y) for x, y in adjacent(x1, y1)]
 
-        for _ in range(20):
+        for path_length in range(20):
             next = []
-            for x, y, v in candidates:
-                if (x, y) in v:
-                    continue
+            for x, y in candidates:
                 if not is_valid(x, y):
                     continue
 
@@ -81,16 +79,18 @@ for y1 in range(height):
                     continue
 
                 cheats.add(key)
-                v = v[:]
-                v.append((x, y))
 
                 if grid[y][x] != "#":
-                    val = dists_from_start[(x1, y1)] + len(v) + dists_from_end[(x, y)]
+                    val = (
+                        dists_from_start[(x1, y1)]
+                        + path_length
+                        + dists_from_end[(x, y)]
+                    )
 
                     if val < initial and initial - val >= 100:
                         out += 1
 
-                next += [(x, y, v) for x, y in adjacent(x, y)]
+                next += adjacent(x, y)
 
             candidates = next
 
